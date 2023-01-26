@@ -20,10 +20,30 @@ if ($low && $high) {
 
         private $reverse = true;
 
+        private float $currentTestClassTime = 0;
+
         public function startTest(Test $test): void
         {
-            $this->className = \get_class($test);
+            if ('' !== $this->className && $test::class !== $this->className) {
+                echo sprintf('%d/%d (%dms)', $this->numTestsRun, $this->numTests, (int)($this->currentTestClassTime *  1000));
+                $this->currentTestClassTime = 0;
+            }
+
+            $this->className = $test::class;
             parent::startTest($test);
+        }
+
+        public function endTest(Test $test, float $time): void
+        {
+            parent::endTest($test, $time);
+
+            $this->currentTestClassTime += $time;
+            $this->numTestsRun++;
+
+            if ($this->numTestsRun === $this->numTests) {
+                echo sprintf('%d/%d (%dms)', $this->numTestsRun, $this->numTests, (int)($this->currentTestClassTime *  1000));
+                $this->currentTestClassTime = 0;
+            }
         }
 
         protected function writeProgress(string $progress): void
@@ -179,3 +199,4 @@ if ($low && $high) {
         }
     }
 }
+
