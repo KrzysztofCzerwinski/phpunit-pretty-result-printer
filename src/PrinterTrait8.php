@@ -76,6 +76,14 @@ trait PrinterTrait8
      */
     private $defaultMarkers = [];
 
+    private $colorsTool;
+
+    private $defaultConfigOptions;
+
+    private $anyBarEnabled;
+
+    private $anyBarPort;
+
     /**
      * {@inheritdoc}
      */
