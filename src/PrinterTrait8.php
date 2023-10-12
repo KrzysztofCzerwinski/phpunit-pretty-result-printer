@@ -80,9 +80,9 @@ trait PrinterTrait8
 
     private $defaultConfigOptions;
 
-    private $anyBarEnabled;
-
     private $anyBarPort;
+
+    protected $anyBarEnabled;
 
     /**
      * {@inheritdoc}
